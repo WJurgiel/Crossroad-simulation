@@ -12,8 +12,10 @@ public class Car {
         this.name = name;
         this.from = from;
         this.to = to;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.xSpawnPoint = xSpawnPoint;
+        this.ySpawnPoint = ySpawnPoint;
+        this.xPos = xSpawnPoint;
+        this.yPos = ySpawnPoint;
         this.speed = speed;
     }
     public void go(){

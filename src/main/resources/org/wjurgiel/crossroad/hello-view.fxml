@@ -30,14 +30,14 @@
                         <Image url="@Cars/green/left.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="43.0" fitWidth="63.0" layoutX="315.0" layoutY="176.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                  <ImageView fitHeight="43.0" fitWidth="63.0" layoutX="296.0" layoutY="165.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                      <image>
-                        <Image url="@Lights/red.png" />
+                        <Image url="@Signs/main.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="43.0" fitWidth="63.0" layoutX="293.0" layoutY="291.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Lights/red.png" />
+                        <Image url="@Signs/yield.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="43.0" fitWidth="63.0" layoutX="180.0" layoutY="165.0" opacity="0.8" pickOnBounds="true" preserveRatio="true" rotate="180.0">

@@ -4,9 +4,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.wjurgiel.crossroad.Commands.CommandQueueManager;
+import org.wjurgiel.crossroad.Commands.ICommand;
 import org.wjurgiel.crossroad.Files.FileHandler;
+import org.wjurgiel.crossroad.Traffic.TrafficManager;
 
 import java.io.IOException;
+import java.util.Queue;
 
 public class HelloApplication extends Application {
     @Override
@@ -17,8 +21,17 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
+        String filePath = "src/main/resources/org/wjurgiel/crossroad/test.json";
         FileHandler fileHandler = FileHandler.getInstance();
+        TrafficManager trafficManager = new TrafficManager();
+        CommandQueueManager commandQueueManager = CommandQueueManager.getInstance(
+                fileHandler.readFileAsJSONArray(filePath),
+                trafficManager);
+//        ArrayList<String> json = fileHandler.readFile("src/main/resources/org/wjurgiel/crossroad/test.json");
 
+        while(commandQueueManager.hasCommands()){
+            commandQueueManager.executeNextCommand();
+        }
     }
     public static void main(String[] args) {
         launch();
