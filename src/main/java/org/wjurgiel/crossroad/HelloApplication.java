@@ -27,7 +27,6 @@ public class HelloApplication extends Application {
         CommandQueueManager commandQueueManager = CommandQueueManager.getInstance(
                 fileHandler.readFileAsJSONArray(filePath),
                 trafficManager);
-//        ArrayList<String> json = fileHandler.readFile("src/main/resources/org/wjurgiel/crossroad/test.json");
 
         while(commandQueueManager.hasCommands()){
             commandQueueManager.executeNextCommand();

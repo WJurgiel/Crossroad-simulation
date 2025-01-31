@@ -24,4 +24,9 @@ public class Car {
     public void waitForOther(){
 
     }
+
+    @Override
+    public String toString() {
+        return name + " " + from + " -> " + to;
+    }
 }

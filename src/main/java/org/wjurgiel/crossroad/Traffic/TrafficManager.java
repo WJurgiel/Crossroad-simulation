@@ -14,7 +14,7 @@ public class TrafficManager {
 
     public void addVehicle(Car car){
         // implementation
-        System.out.println("Traffic manager added new car");
+        System.out.println("Traffic manager added new car: " + car);
     }
     public void step(){
         // implementation

@@ -34,7 +34,4 @@ public class FileHandler {
             instance.fileReader = testReader;
         }
     }
-
-
-
 }
