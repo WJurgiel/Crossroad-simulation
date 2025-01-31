@@ -23,6 +23,9 @@ public class CommandQueueManager {
         }
         return instance;
     }
+    public static void deleteInstance(){
+        instance = null;
+    }
     private void initializeCommands(JSONArray commandsArray){
         _commands = new LinkedList<ICommand>();
         for(int comm = 0; comm < commandsArray.length(); comm++){
@@ -45,6 +48,9 @@ public class CommandQueueManager {
         }else{
             System.out.println("Nothing to do!");
         }
+    }
+    public int getCommandsCount(){
+        return _commands.size();
     }
     public boolean hasCommands(){
         return !_commands.isEmpty();

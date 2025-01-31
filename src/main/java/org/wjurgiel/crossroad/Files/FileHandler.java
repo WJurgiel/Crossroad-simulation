@@ -17,15 +17,6 @@ public class FileHandler {
         }
         return instance;
     }
-    public ArrayList<String> readFile(String filePath) throws IOException{
-        ArrayList<String> commandList = new ArrayList<>();
-        JSONArray commands = fileReader.read(filePath);
-
-        for(int i = 0; i < commands.length(); i++){
-            commandList.add(commands.getJSONObject(i).toString());
-        }
-        return commandList;
-    }
     public JSONArray readFileAsJSONArray(String filePath) throws IOException{
         return fileReader.read(filePath);
     }

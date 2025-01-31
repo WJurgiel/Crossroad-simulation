@@ -26,14 +26,14 @@ public class FileHandlerTest {
     }
     @Test
     void readFileAsJSONArray_ReturnsCorrectData() throws IOException {
-        JSONArray fakeJsonArray = new JSONArray();
-        fakeJsonArray.put(new JSONObject().put("type", "addVehicle")
+        JSONArray fakeJsonCommandArray = new JSONArray();
+        fakeJsonCommandArray.put(new JSONObject().put("type", "addVehicle")
                 .put("vehicleId", "car1")
                 .put("startRoad", "south")
                 .put("endRoad", "north"));
-        fakeJsonArray.put(new JSONObject().put("type", "step"));
+        fakeJsonCommandArray.put(new JSONObject().put("type", "step"));
 
-        when(fileReaderMock.read(anyString())).thenReturn(fakeJsonArray);
+        when(fileReaderMock.read(anyString())).thenReturn(fakeJsonCommandArray);
 
         JSONArray result = fileHandler.readFileAsJSONArray("fakePath.json");
 
