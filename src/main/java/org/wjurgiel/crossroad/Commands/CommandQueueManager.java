@@ -2,6 +2,7 @@ package org.wjurgiel.crossroad.Commands;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.wjurgiel.crossroad.Traffic.Directions;
 import org.wjurgiel.crossroad.Traffic.TrafficManager;
 
 import java.util.LinkedList;
@@ -35,7 +36,11 @@ public class CommandQueueManager {
                 String name = command.getString("vehicleId");
                 String startRoad = command.getString("startRoad");
                 String endRoad = command.getString("endRoad");
-                _commands.add(new AddVehicleCommand(name, startRoad, endRoad));
+                Directions direction = (startRoad.equals("north")) ?
+                        Directions.NORTH : (startRoad.equals("east") ?
+                        Directions.EAST : (startRoad.equals("south") ?
+                        Directions.SOUTH : Directions.WEST));
+                _commands.add(new AddVehicleCommand(direction, name, startRoad, endRoad));
             }
             else if (type.equals("step")){
                 _commands.add(new StepCommand());

@@ -3,14 +3,19 @@ package org.wjurgiel.crossroad.Traffic;
 import org.wjurgiel.crossroad.Car;
 import org.wjurgiel.crossroad.Commands.ICommand;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 public class TrafficManager{
     private static TrafficManager instance;
-    private Queue<Car> cars = new LinkedList<Car>();
+    private final Map<Directions, Queue<Car>> cars = new HashMap<>();
     private ITrafficStrategy strategy;
     public TrafficManager(ITrafficStrategy strategy){
+        for(Directions d : Directions.values()){
+            cars.put(d, new LinkedList<>());
+        }
         this.strategy = strategy;
     }
     public static TrafficManager getInstance(ITrafficStrategy strategy){
@@ -25,9 +30,9 @@ public class TrafficManager{
     public void setStrategy(ITrafficStrategy strategy){
         this.strategy = strategy;
     }
-    public void addVehicle(Car car){
+    public void addVehicle(Directions direction,Car car){
         System.out.println("Traffic manager added new car: " + car);
-        cars.add(car);
+        cars.get(direction).add(car);
     }
     public void step(){
         strategy.executeStep(this);
