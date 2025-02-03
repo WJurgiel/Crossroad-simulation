@@ -30,15 +30,9 @@
   
       },
       {
-        "type": "failure"
-      },
-      {
   
         "type": "step"
   
-      },
-      {
-        "type": "fix"
       },
   
       {
@@ -85,9 +79,22 @@
 
         "type": "step"
 
+      },
+      {
+
+        "type": "step"
+
+      },
+      {
+
+        "type": "step"
+
+      },
+      {
+
+        "type": "step"
+
       }
-
-
     ]
   
   }

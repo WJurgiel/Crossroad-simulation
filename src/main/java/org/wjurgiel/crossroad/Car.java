@@ -19,7 +19,7 @@ public class Car {
         this.speed = speed;
     }
     public void go(){
-
+        System.out.println("!" + name + " exits the crossroad. Farewell driver!");
     }
     public void waitForOther(){
 

@@ -27,6 +27,9 @@ public class TrafficManager{
     public static void deleteInstance(){
         instance = null;
     }
+    public Queue<Car> getCarQueue(Directions d){
+        return cars.get(d);
+    }
     public void setStrategy(ITrafficStrategy strategy){
         this.strategy = strategy;
     }
