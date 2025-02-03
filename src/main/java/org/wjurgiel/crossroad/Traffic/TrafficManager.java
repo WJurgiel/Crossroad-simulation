@@ -8,19 +8,22 @@ import java.util.Queue;
 
 public class TrafficManager {
     private Queue<Car> cars = new LinkedList<Car>();
-    public TrafficManager(){
-
+    private ITrafficStrategy strategy;
+    int ticksToChange = 10; // implement dynamic time handling!
+    public TrafficManager(ITrafficStrategy strategy){
+        this.strategy = strategy;
     }
-
+    public void setStrategy(ITrafficStrategy strategy){
+        this.strategy = strategy;
+    }
     public void addVehicle(Car car){
-        // implementation
         System.out.println("Traffic manager added new car: " + car);
         cars.add(car);
     }
     public void step(){
-        // implementation
-        System.out.println("Traffic manager step");
+        strategy.executeStep(this);
     }
+    @Override
     public String toString(){
         return cars.toString();
     }
