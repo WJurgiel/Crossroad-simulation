@@ -31,6 +31,8 @@ public class HelloApplication extends Application {
         while(commandQueueManager.hasCommands()){
             commandQueueManager.executeNextCommand();
         }
+
+        System.out.println(trafficManager);
     }
     public static void main(String[] args) {
         launch();

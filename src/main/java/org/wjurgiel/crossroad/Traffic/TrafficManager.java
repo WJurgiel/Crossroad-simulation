@@ -15,9 +15,13 @@ public class TrafficManager {
     public void addVehicle(Car car){
         // implementation
         System.out.println("Traffic manager added new car: " + car);
+        cars.add(car);
     }
     public void step(){
         // implementation
         System.out.println("Traffic manager step");
+    }
+    public String toString(){
+        return cars.toString();
     }
 }
