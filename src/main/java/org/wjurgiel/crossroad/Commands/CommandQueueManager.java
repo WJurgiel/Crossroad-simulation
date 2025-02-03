@@ -40,6 +40,12 @@ public class CommandQueueManager {
             else if (type.equals("step")){
                 _commands.add(new StepCommand());
             }
+            else if (type.equals("failure")){
+                _commands.add(new FailureCommand());
+            }
+            else if (type.equals("fix")){
+                _commands.add(new FixLightsCommand());
+            }
         }
     }
     public void executeNextCommand(){

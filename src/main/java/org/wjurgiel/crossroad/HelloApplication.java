@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
 
         String filePath = "src/main/resources/org/wjurgiel/crossroad/test.json";
         FileHandler fileHandler = FileHandler.getInstance();
-        TrafficManager trafficManager = new TrafficManager(new TrafficFailureStrategy());
+        TrafficManager trafficManager = TrafficManager.getInstance(new TrafficLightStrategy());
         CommandQueueManager commandQueueManager = CommandQueueManager.getInstance(
                 fileHandler.readFileAsJSONArray(filePath),
                 trafficManager);

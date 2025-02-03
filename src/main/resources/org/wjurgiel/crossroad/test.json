@@ -29,11 +29,16 @@
         "type": "step"
   
       },
-  
+      {
+        "type": "failure"
+      },
       {
   
         "type": "step"
   
+      },
+      {
+        "type": "fix"
       },
   
       {

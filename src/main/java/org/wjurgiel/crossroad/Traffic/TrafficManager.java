@@ -6,12 +6,21 @@ import org.wjurgiel.crossroad.Commands.ICommand;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TrafficManager {
+public class TrafficManager{
+    private static TrafficManager instance;
     private Queue<Car> cars = new LinkedList<Car>();
     private ITrafficStrategy strategy;
-    int ticksToChange = 10; // implement dynamic time handling!
     public TrafficManager(ITrafficStrategy strategy){
         this.strategy = strategy;
+    }
+    public static TrafficManager getInstance(ITrafficStrategy strategy){
+        if(instance == null){
+            instance = new TrafficManager(strategy);
+        }
+        return instance;
+    }
+    public static void deleteInstance(){
+        instance = null;
     }
     public void setStrategy(ITrafficStrategy strategy){
         this.strategy = strategy;
