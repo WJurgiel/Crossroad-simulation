@@ -12,6 +12,7 @@ public class Car {
     private Directions startDirection;
     private Directions endDirection;
     private Directions onMyLeftDirection;
+    private Directions onMyRightDirection;
     private Turning turning;
     public Car(String name, String from, String to, float xSpawnPoint, float ySpawnPoint, float speed) {
         this.name = name;
@@ -38,20 +39,17 @@ public class Car {
     private void setOnMyLeftAndRight(){
         Directions[] values = Directions.values();
         int onMyLeftIndex = (startDirection.ordinal() + 1) % values.length;
-        int onMyRightIndex = ((endDirection.ordinal() - 1) < 0) ? values.length - 1 : endDirection.ordinal() - 1;
+        int onMyRightIndex = ((startDirection.ordinal() - 1) < 0) ? values.length - 1 : startDirection.ordinal() - 1;
         onMyLeftDirection = values[onMyLeftIndex];
+        onMyRightDirection = values[onMyRightIndex];
     }
-    private Turning setTurning(){
-        int difference = Math.abs(startDirection.ordinal() - endDirection.ordinal());
-        switch (difference){
-            case 1:
-                return Turning.RIGHT;
-            case 2:
-                return Turning.FORWARD;
-            case 3:
-                return Turning.LEFT;
-        }
-        return null;
+    private Turning setTurning() {
+        int difference = (endDirection.ordinal() - startDirection.ordinal() + 4) % 4;
+        return switch (difference) {
+            case 1 -> Turning.LEFT;
+            case 3 -> Turning.RIGHT;
+            default -> Turning.FORWARD;
+        };
     }
     public Turning getTurning(){
         return turning;
@@ -59,9 +57,13 @@ public class Car {
     public Directions getOnMyLeftDirection(){
         return onMyLeftDirection;
     }
+    public Directions getOnMyRightDirection(){
+        return onMyRightDirection;
+    }
     public Directions getStartDirection(){
         return startDirection;
     }
+
     public void go(){
         System.out.println("!" + name + " exits the crossroad. Farewell driver!");
     }

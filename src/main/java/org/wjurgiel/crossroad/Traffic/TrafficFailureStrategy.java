@@ -4,10 +4,7 @@ package org.wjurgiel.crossroad.Traffic;
 import org.wjurgiel.crossroad.Car.Car;
 import org.wjurgiel.crossroad.Car.Turning;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class TrafficFailureStrategy extends AbstractTrafficStrategy{
     private Lanes priorityLane;
@@ -48,15 +45,20 @@ public class TrafficFailureStrategy extends AbstractTrafficStrategy{
             Iterator<Map.Entry<Directions, Queue<Car>>> iterator = priorityCarsQueue.entrySet().iterator();
             Map.Entry<Directions, Queue<Car>> firstPriorityLane = iterator.hasNext() ? iterator.next() : null;
             Map.Entry<Directions, Queue<Car>> secondPriorityLane = iterator.hasNext() ? iterator.next() : null;
+            Queue<Car> carOnTheLeft = priorityCarsQueue.get(yieldCar.getOnMyLeftDirection());
+            Queue<Car> carOnTheRight = priorityCarsQueue.get(yieldCar.getOnMyRightDirection());
 //            if(firstPriorityLane == null || secondPriorityLane == null)
 //                throw new Exception("Cannot find first or second priority lane");
             if((yieldCar.getTurning() == Turning.FORWARD || yieldCar.getTurning() == Turning.LEFT)){
-                if(priorityCarsQueue.get(firstPriorityLane.getKey()).isEmpty() && priorityCarsQueue.get(secondPriorityLane.getKey()).isEmpty()){
+                if(priorityCarsQueue.get(Objects.requireNonNull(firstPriorityLane).getKey()).isEmpty() && priorityCarsQueue.get(Objects.requireNonNull(secondPriorityLane).getKey()).isEmpty()){
+                    moveCar(trafficManager, yieldCar.getStartDirection());
+                }
+                else if (Objects.requireNonNull(carOnTheLeft.peek()).getTurning() == Turning.RIGHT && carOnTheRight.isEmpty()){
                     moveCar(trafficManager, yieldCar.getStartDirection());
                 }
             }
             else if (yieldCar.getTurning() == Turning.RIGHT){
-                if(priorityCarsQueue.get(yieldCar.getOnMyLeftDirection()).isEmpty()){
+                if(carOnTheLeft.isEmpty() || carOnTheLeft.peek().getTurning() == Turning.RIGHT){
                     moveCar(trafficManager, yieldCar.getStartDirection());
                 }
             }
