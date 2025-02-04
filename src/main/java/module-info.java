@@ -11,4 +11,6 @@ module org.wjurgiel.crossroad {
     exports org.wjurgiel.crossroad;
     exports org.wjurgiel.crossroad.Files;
     opens org.wjurgiel.crossroad.Files to javafx.fxml;
+    exports org.wjurgiel.crossroad.Car;
+    opens org.wjurgiel.crossroad.Car to javafx.fxml;
 }

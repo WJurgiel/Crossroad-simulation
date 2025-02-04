@@ -2,7 +2,7 @@ package org.wjurgiel.crossroad.Traffic;
 
 import java.util.Objects;
 
-public class TrafficLightStrategy implements ITrafficStrategy{
+public class TrafficLightStrategy extends AbstractTrafficStrategy{
     private final int START_TIME = 2;
     private int ticksToChange; // implement dynamic time handling!
     private Lanes greenLightLane;
@@ -26,23 +26,13 @@ public class TrafficLightStrategy implements ITrafficStrategy{
             printGreenLightLane();
             return;
         }
-        if(greenLightLane == Lanes.HORIZONTAL){
-            if(!trafficManager.getCarQueue(Directions.EAST).isEmpty()){
-                Objects.requireNonNull(trafficManager.getCarQueue(Directions.EAST).poll()).go();
-            }
-            if(!trafficManager.getCarQueue(Directions.WEST).isEmpty()){
-                Objects.requireNonNull(trafficManager.getCarQueue(Directions.WEST).poll()).go();
-            }
-        } else if(greenLightLane == Lanes.VERTICAL){
-            if(!trafficManager.getCarQueue(Directions.NORTH).isEmpty()){
-                Objects.requireNonNull(trafficManager.getCarQueue(Directions.NORTH).poll()).go();
-            }
-            if(!trafficManager.getCarQueue(Directions.SOUTH).isEmpty()){
-                Objects.requireNonNull(trafficManager.getCarQueue(Directions.SOUTH).poll()).go();
-            }
+        if (greenLightLane == Lanes.HORIZONTAL){
+            moveCar(trafficManager, Directions.WEST);
+            moveCar(trafficManager, Directions.EAST);
         }
-
-
-
+        else if (greenLightLane == Lanes.VERTICAL){
+            moveCar(trafficManager, Directions.NORTH);
+            moveCar(trafficManager, Directions.SOUTH);
+        }
     }
 }

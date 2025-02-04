@@ -1,10 +1,8 @@
 package org.wjurgiel.crossroad.Commands;
 
-import org.wjurgiel.crossroad.Car;
+import org.wjurgiel.crossroad.Car.Car;
 import org.wjurgiel.crossroad.Traffic.Directions;
 import org.wjurgiel.crossroad.Traffic.TrafficManager;
-
-import java.util.Vector;
 
 public class AddVehicleCommand implements ICommand{
     private String carName, startRoad, endRoad;

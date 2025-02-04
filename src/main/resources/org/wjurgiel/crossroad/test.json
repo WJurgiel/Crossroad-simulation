@@ -1,6 +1,9 @@
 {
     "commands": [
       {
+        "type": "failure"
+      },
+      {
   
         "type": "addVehicle",
   
@@ -46,7 +49,39 @@
         "endRoad": "south"
   
       },
-  
+      {
+
+        "type": "addVehicle",
+
+        "vehicleId": "vehicle5",
+
+        "startRoad": "south",
+
+        "endRoad": "north"
+
+      },
+      {
+
+        "type": "addVehicle",
+
+        "vehicleId": "vehicle6",
+
+        "startRoad": "east",
+
+        "endRoad": "south"
+
+      },
+      {
+
+        "type": "addVehicle",
+
+        "vehicleId": "vehicle7",
+
+        "startRoad": "east",
+
+        "endRoad": "south"
+
+      },
       {
   
         "type": "addVehicle",
@@ -55,7 +90,7 @@
   
         "startRoad": "west",
   
-        "endRoad": "south"
+        "endRoad": "north"
   
       },
   

@@ -1,7 +1,6 @@
 package org.wjurgiel.crossroad.Traffic;
 
-import org.wjurgiel.crossroad.Car;
-import org.wjurgiel.crossroad.Commands.ICommand;
+import org.wjurgiel.crossroad.Car.Car;
 
 import java.util.HashMap;
 import java.util.LinkedList;
