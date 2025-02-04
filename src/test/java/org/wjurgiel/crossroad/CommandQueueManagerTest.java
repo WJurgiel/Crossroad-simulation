@@ -5,11 +5,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.wjurgiel.crossroad.Car.Car;
 import org.wjurgiel.crossroad.Commands.CommandQueueManager;
-import org.wjurgiel.crossroad.Files.IFileReader;
+import org.wjurgiel.crossroad.Traffic.Directions;
 import org.wjurgiel.crossroad.Traffic.TrafficManager;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -57,7 +56,7 @@ public class CommandQueueManagerTest {
     @Test
     void executeNextCommand_ExecutesAddVehicleCommandCorrectly(){
         commandQueueManager.executeNextCommand();
-        verify(mockTrafficManager, times(1)).addVehicle(any(Car.class));
+        verify(mockTrafficManager, times(1)).addVehicle(any(Directions.class),any(Car.class));
     }
     @Test
     void executeNextCommand_DontExecuteOnEmptyQueue(){
@@ -69,7 +68,7 @@ public class CommandQueueManagerTest {
 
         commandQueueManager.executeNextCommand();
 
-        verify(mockTrafficManager, times(2)).addVehicle(any(Car.class));
+        verify(mockTrafficManager, times(2)).addVehicle(any(Directions.class),any(Car.class));
         verify(mockTrafficManager, times(2)).step();
     }
 }
