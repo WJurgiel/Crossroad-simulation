@@ -1,5 +1,8 @@
 package org.wjurgiel.crossroad.Traffic;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TrafficLightStrategy extends AbstractTrafficStrategy{
@@ -16,8 +19,9 @@ public class TrafficLightStrategy extends AbstractTrafficStrategy{
         System.out.println("--Green light lane: " + greenLightLane.toString() + "--");
     }
     @Override
-    public void executeStep(TrafficManager trafficManager){
-        // implementation
+    public void executeStep(TrafficManager trafficManager) {
+        List<String> carsLeft = new ArrayList<>();
+
         System.out.println("Traffic lights: " + --ticksToChange);
         if(ticksToChange  <= 0){
             greenLightLane = (greenLightLane == Lanes.HORIZONTAL) ? Lanes.VERTICAL : Lanes.HORIZONTAL;
@@ -27,12 +31,17 @@ public class TrafficLightStrategy extends AbstractTrafficStrategy{
             return;
         }
         if (greenLightLane == Lanes.HORIZONTAL){
-            moveCar(trafficManager, Directions.WEST);
-            moveCar(trafficManager, Directions.EAST);
+            moveCar(trafficManager, Directions.WEST, carsLeft);
+            moveCar(trafficManager, Directions.EAST, carsLeft);
         }
         else if (greenLightLane == Lanes.VERTICAL){
-            moveCar(trafficManager, Directions.NORTH);
-            moveCar(trafficManager, Directions.SOUTH);
+            moveCar(trafficManager, Directions.NORTH, carsLeft);
+            moveCar(trafficManager, Directions.SOUTH, carsLeft);
+        }
+        try {
+            commitToOutputFile(carsLeft);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
