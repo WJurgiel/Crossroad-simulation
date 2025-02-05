@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import org.wjurgiel.crossroad.Commands.CommandQueueManager;
 import org.wjurgiel.crossroad.Commands.ICommand;
 import org.wjurgiel.crossroad.Files.FileHandler;
+import org.wjurgiel.crossroad.Traffic.LightsSystem;
 import org.wjurgiel.crossroad.Traffic.TrafficFailureStrategy;
 import org.wjurgiel.crossroad.Traffic.TrafficLightStrategy;
 import org.wjurgiel.crossroad.Traffic.TrafficManager;
@@ -25,11 +26,14 @@ public class HelloApplication extends Application {
 
         String filePath = "src/main/resources/org/wjurgiel/crossroad/test.json";
         FileHandler fileHandler = FileHandler.getInstance();
-        TrafficManager trafficManager = TrafficManager.getInstance(new TrafficLightStrategy());
+
+        TrafficManager trafficManager = TrafficManager.getInstance();
+        TrafficLightStrategy trafficLightStrategy = new TrafficLightStrategy();
+        trafficManager.setStrategy(trafficLightStrategy);
+
         CommandQueueManager commandQueueManager = CommandQueueManager.getInstance(
                 fileHandler.readFileAsJSONArray(filePath),
                 trafficManager);
-
         while(commandQueueManager.hasCommands()){
             commandQueueManager.executeNextCommand();
         }
