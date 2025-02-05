@@ -3,7 +3,9 @@ package org.wjurgiel.crossroad.Traffic;
 
 import org.wjurgiel.crossroad.Car.Car;
 import org.wjurgiel.crossroad.Car.Turning;
+import org.wjurgiel.crossroad.Files.FileHandler;
 
+import java.io.IOException;
 import java.util.*;
 
 public class TrafficFailureStrategy extends AbstractTrafficStrategy{
@@ -40,7 +42,7 @@ public class TrafficFailureStrategy extends AbstractTrafficStrategy{
             yieldCarsQueue.put(Directions.WEST, trafficManager.getCarQueue(Directions.WEST));
         }
     }
-    private void moveYieldCar(Car yieldCar, TrafficManager trafficManager) {
+    private void moveYieldCar(Car yieldCar, TrafficManager trafficManager, List<String> carsLeft){
         if(yieldCar != null){
             Iterator<Map.Entry<Directions, Queue<Car>>> iterator = priorityCarsQueue.entrySet().iterator();
             Map.Entry<Directions, Queue<Car>> firstPriorityLane = iterator.hasNext() ? iterator.next() : null;
@@ -51,21 +53,24 @@ public class TrafficFailureStrategy extends AbstractTrafficStrategy{
 //                throw new Exception("Cannot find first or second priority lane");
             if((yieldCar.getTurning() == Turning.FORWARD || yieldCar.getTurning() == Turning.LEFT)){
                 if(priorityCarsQueue.get(Objects.requireNonNull(firstPriorityLane).getKey()).isEmpty() && priorityCarsQueue.get(Objects.requireNonNull(secondPriorityLane).getKey()).isEmpty()){
-                    moveCar(trafficManager, yieldCar.getStartDirection());
+                    moveCar(trafficManager, yieldCar.getStartDirection(), carsLeft);
                 }
+                // coś tutaj
                 else if (Objects.requireNonNull(carOnTheLeft.peek()).getTurning() == Turning.RIGHT && carOnTheRight.isEmpty()){
-                    moveCar(trafficManager, yieldCar.getStartDirection());
+                    moveCar(trafficManager, yieldCar.getStartDirection(), carsLeft);
                 }
             }
             else if (yieldCar.getTurning() == Turning.RIGHT){
                 if(carOnTheLeft.isEmpty() || carOnTheLeft.peek().getTurning() == Turning.RIGHT){
-                    moveCar(trafficManager, yieldCar.getStartDirection());
+                    moveCar(trafficManager, yieldCar.getStartDirection(), carsLeft);
                 }
             }
+
         }
     }
     @Override
     public void executeStep(TrafficManager trafficManager) {
+        List<String> carsLeft = new ArrayList<>();
         if(priorityCarsQueue.isEmpty()){
             initializeLocalRefCarsQueue(trafficManager);
         }
@@ -74,22 +79,26 @@ public class TrafficFailureStrategy extends AbstractTrafficStrategy{
             Car carOnNorth = trafficManager.getCarQueue(Directions.NORTH).peek();
             Car carOnSouth = trafficManager.getCarQueue(Directions.SOUTH).peek();
 
-            moveYieldCar(carOnNorth, trafficManager);
-            moveYieldCar(carOnSouth, trafficManager);
+            moveYieldCar(carOnNorth, trafficManager,carsLeft);
+            moveYieldCar(carOnSouth, trafficManager,carsLeft);
 
-            moveCar(trafficManager, Directions.WEST);
-            moveCar(trafficManager, Directions.EAST);
+            moveCar(trafficManager, Directions.WEST, carsLeft);
+            moveCar(trafficManager, Directions.EAST, carsLeft);
         }
         else if (priorityLane == Lanes.VERTICAL){
             Car carOnEast = yieldCarsQueue.get(Directions.EAST).peek();
             Car carOnWest = yieldCarsQueue.get(Directions.WEST).peek();
 
-            moveYieldCar(carOnEast, trafficManager);
-            moveYieldCar(carOnWest, trafficManager);
+            moveYieldCar(carOnEast, trafficManager, carsLeft);
+            moveYieldCar(carOnWest, trafficManager, carsLeft);
 
-            moveCar(trafficManager, Directions.NORTH);
-            moveCar(trafficManager, Directions.SOUTH);
+            moveCar(trafficManager, Directions.NORTH,carsLeft);
+            moveCar(trafficManager, Directions.SOUTH,carsLeft);
         }
-
+        try {
+            commitToOutputFile(carsLeft);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

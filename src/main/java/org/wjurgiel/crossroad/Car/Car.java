@@ -63,7 +63,9 @@ public class Car {
     public Directions getStartDirection(){
         return startDirection;
     }
-
+    public String getName(){
+        return name;
+    }
     public void go(){
         System.out.println("!" + name + " exits the crossroad. Farewell driver!");
     }
