@@ -9,8 +9,9 @@ public class TrafficLightStrategy extends AbstractTrafficStrategy{
     private final int START_TIME = 2;
     private int ticksToChange; // implement dynamic time handling!
     private Lanes greenLightLane;
-
+    private  LightsSystem lightsSystem;
     public TrafficLightStrategy(){
+        lightsSystem = LightsSystem.getInstance();
         ticksToChange = START_TIME;
         greenLightLane = Lanes.HORIZONTAL;
         printGreenLightLane();
@@ -22,12 +23,9 @@ public class TrafficLightStrategy extends AbstractTrafficStrategy{
     public void executeStep(TrafficManager trafficManager) {
         List<String> carsLeft = new ArrayList<>();
 
-        System.out.println("Traffic lights: " + --ticksToChange);
-        if(ticksToChange  <= 0){
+        if(!lightsSystem.tick()){
             greenLightLane = (greenLightLane == Lanes.HORIZONTAL) ? Lanes.VERTICAL : Lanes.HORIZONTAL;
-            ticksToChange = START_TIME;
-            System.out.println("Changing the lights!");
-            printGreenLightLane();
+            System.out.println("--Green light lane: " + greenLightLane + "--");
             return;
         }
         if (greenLightLane == Lanes.HORIZONTAL){
